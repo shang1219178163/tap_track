@@ -12,8 +12,9 @@ on:
 
 jobs:
   build:
+    permissions:
+      id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -39,14 +40,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Dry run publish
-        run: flutter pub publish --dry-run
+      - name: Publish
+        run: dart pub publish --force
 
       # 发布插件
-      - name: Publish package to pub.dev
-        uses: k-paxian/dart-package-publisher@v1.5.1
-        with:
-          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-          flutter: true
-          skipTests: true
-          dryRunOnly: false
+#      - name: Publish package to pub.dev
+#        uses: k-paxian/dart-package-publisher@v1.5.1
+#        with:
+#          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+#          flutter: true
+#          skipTests: true
+#          dryRunOnly: false
