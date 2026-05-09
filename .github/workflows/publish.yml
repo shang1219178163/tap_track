@@ -40,14 +40,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Publish
-        run: dart pub publish --force
+#      - name: Publish
+#        run: dart pub publish --force
 
-      # 发布插件
-#      - name: Publish package to pub.dev
-#        uses: k-paxian/dart-package-publisher@v1.5.1
-#        with:
-#          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-#          flutter: true
-#          skipTests: true
-#          dryRunOnly: false
+       #发布插件
+      - name: Publish package to pub.dev
+        uses: k-paxian/dart-package-publisher@v1.5.1
+        with:
+          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+          flutter: true
+          skipTests: true
+          dryRunOnly: false
