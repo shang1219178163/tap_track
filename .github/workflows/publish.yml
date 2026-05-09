@@ -21,7 +21,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.6'  # 可换成你的版本
+          flutter-version: '3.19.2'  # 可换成你的版本
           channel: 'stable'
 
       # 3️⃣ 修复 PATH 优先级问题（防止系统 Dart 覆盖 Flutter Dart）
