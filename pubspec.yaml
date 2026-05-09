@@ -1,6 +1,6 @@
 name: tap_track
 description: "Tap-event global tracking."
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/shang1219178163/tap_track
 
 environment:
