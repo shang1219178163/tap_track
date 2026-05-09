@@ -55,13 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildFloatingActionButton() {
     return TapTrackWidget(
-      params: const {
+      data: const {
         "event": "add",
         "goodsId": 9999,
       },
       child: FloatingActionButton(
         onPressed: () {
           debugPrint("$runtimeType onFloat");
+          //flutter: main onReport: {event: add, goodsId: 9999}
         },
         child: const Icon(Icons.add),
       ),
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: items,
                 itemBuilder: (e) {
                   return TapTrackWidget(
-                    params: {
+                    data: {
                       "event": e.$1,
                       "goodsId": 1001,
                     },

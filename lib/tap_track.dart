@@ -1,13 +1,13 @@
 //
-//  TapTrackManager.dart
+//  TapTrack.dart
 //  TapTrack
 //
 //  Created by shang on 2026/5/9 10:03.
 //  Copyright © 2026/5/9 shang. All rights reserved.
 //
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 /// 全局埋点(需要配合 TapTrackWidget 使用)
@@ -26,7 +26,6 @@ class TapTrackManager {
     if (event is! PointerDownEvent) {
       return;
     }
-    // debugPrint("_handlePointer PointerDown: ${event.position}");
 
     final result = HitTestResult();
     WidgetsBinding.instance.hitTestInView(
@@ -35,67 +34,39 @@ class TapTrackManager {
       event.viewId,
     );
 
-    for (final item in result.path) {
-      final target = item.target;
-      if (target is RenderObject) {
-        final element = _findElement(target);
-        if (element != null) {
-          final inherited = element.dependOnInheritedWidgetOfExactType<_TapTrackInherited>();
-          if (inherited != null) {
-            onReport(inherited.params);
-            break;
-          }
+    for (final entry in result.path) {
+      final target = entry.target;
+      if (target is RenderMetaData) {
+        final data = target.metaData;
+        if (data is Map<String, dynamic>) {
+          onReport(data);
+          break;
         }
       }
     }
   }
-
-  static Element? _findElement(RenderObject renderObject) {
-    Element? result;
-    void visitor(Element element) {
-      if (element.renderObject == renderObject) {
-        result = element;
-      } else {
-        element.visitChildren(visitor);
-      }
-    }
-
-    WidgetsBinding.instance.rootElement?.visitChildren(visitor);
-    return result;
-  }
 }
 
-/// 日志追踪组件
 class TapTrackWidget extends StatelessWidget {
   const TapTrackWidget({
     super.key,
+    required this.data,
+    this.behavior = HitTestBehavior.translucent,
     required this.child,
-    required this.params,
   });
+
+  final Map<String, dynamic> data;
+
+  final HitTestBehavior behavior;
 
   final Widget child;
 
-  final Map<String, dynamic> params;
-
   @override
   Widget build(BuildContext context) {
-    return _TapTrackInherited(
-      params: params,
+    return MetaData(
+      metaData: data,
+      behavior: behavior,
       child: child,
     );
-  }
-}
-
-class _TapTrackInherited extends InheritedWidget {
-  const _TapTrackInherited({
-    required this.params,
-    required super.child,
-  });
-
-  final Map<String, dynamic> params;
-
-  @override
-  bool updateShouldNotify(covariant _TapTrackInherited oldWidget) {
-    return !mapEquals(oldWidget.params, params);
   }
 }

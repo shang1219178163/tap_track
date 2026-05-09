@@ -18,6 +18,7 @@ void main() {
     TapTrackManager.init(
         onReport: (params) {
             debugPrint("main onReport: $params");
+          //flutter: main onReport: {event: add, goodsId: 9999}
         },
     );
     
@@ -27,14 +28,13 @@ void main() {
 
 ```dart
 TapTrackWidget(
-  params: const {
+  data: const {
     "event": "add",
     "goodsId": 9999,
   },
   child: FloatingActionButton(
     onPressed: () {
       debugPrint("$runtimeType onFloat");
-      //flutter: main onReport: {event: add, goodsId: 9999}
     },
     child: const Icon(Icons.add),
   ),

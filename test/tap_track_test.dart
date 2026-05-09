@@ -6,7 +6,7 @@ import 'package:tap_track/tap_track.dart';
 void main() {
   test('tap', () {
     TapTrackWidget(
-      params: const {
+      data: const {
         "event": "tap",
         "goodsId": 1001,
       },
