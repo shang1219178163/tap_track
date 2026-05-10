@@ -83,7 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text("TapTrackWidget"),
               buildWrap<(String, VoidCallback)>(
                 items: items,
                 itemBuilder: (e) {
@@ -98,7 +100,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                 },
-              )
+              ),
+              Divider(),
+              Text("MetaData"),
+              buildWrap<(String, VoidCallback)>(
+                items: items,
+                itemBuilder: (e) {
+                  return MetaData(
+                    metaData: {
+                      "event": e.$1,
+                      "goodsId": 1001,
+                    },
+                    child: ElevatedButton(
+                      onPressed: e.$2,
+                      child: Text(e.$1),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
